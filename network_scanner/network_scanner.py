@@ -1,5 +1,5 @@
 import ipaddress
-import utils
+from .utils import *
 import yaml
 
 
@@ -21,7 +21,7 @@ class NetworkScanner:
                 config = yaml.safe_load(config_file)
             self.network = config.get("network", "")
             temp = config.get("port_scanner", {}).get("ports", "")
-            self.ports = utils.parse_ports_config(temp)
+            self.ports = parse_ports_config(temp)
             self.port_timeout = float(config.get("port_scanner", {}).get("timeout", "0.01"))
             self.host_timeout = float(config.get("host_scanner", {}).get("timeout", "5"))
         except:
@@ -33,15 +33,16 @@ class NetworkScanner:
 
 
     def detect_hosts(self) -> None:
-        self.available_hosts = utils.scan_hosts(self.network, self.host_timeout)
+        self.available_hosts = scan_hosts(self.network, self.host_timeout)
 
 
     def detect_open_ports(self) -> None:
         self.open_ports = {host: [] for host in self.available_hosts}
         for host in self.available_hosts:
             print(f"Scanning: {host}")
-            temp = utils.scan_ports(host, self.ports, self.port_timeout)
+            temp = scan_ports(host, self.ports, self.port_timeout)
             self.open_ports.get(host, {}).extend(temp)
+
 
 
 if __name__ == "__main__":

@@ -1,2 +1,2 @@
-scapy
-pyyaml
+pyyaml~=6.0
+scapy~=2.4.5
