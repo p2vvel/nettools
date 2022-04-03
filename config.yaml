@@ -1,0 +1,8 @@
+network: "192.168.1.0/24"
+
+port_scanner:
+  timeout: 0.01
+  ports: 0-1000
+
+host_scanner:
+  timeout: 5
