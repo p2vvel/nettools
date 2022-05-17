@@ -1,5 +1,5 @@
 import ipaddress
-from .utils import *
+from utils import *
 import yaml
 
 
@@ -33,15 +33,16 @@ class NetworkScanner:
 
 
     def detect_hosts(self) -> None:
-        self.available_hosts = scan_hosts(self.network, self.host_timeout)
-
+        available_hosts_ARP = scan_hosts_ARP(self.network, self.host_timeout)
+        available_hosts_ICMP = scan_hosts_ICMP(self.network, self.host_timeout)
+        self.available_hosts = set(available_hosts_ARP + available_hosts_ICMP)
 
     def detect_open_ports(self) -> None:
-        self.open_ports = {host: [] for host in self.available_hosts}
-        for host in self.available_hosts:
+        self.open_ports = {host: {} for host in self.available_hosts}
+        for i, host in enumerate(self.available_hosts):
             print(f"Scanning: {host}")
             temp = scan_ports(host, self.ports, self.port_timeout)
-            self.open_ports.get(host, {}).extend(temp)
+            self.open_ports[host] = temp
 
 
 
