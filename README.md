@@ -4,3 +4,18 @@ TODO
 - docker-compose - basckedn needs host network ? 
 - fast-api - get hosts, get host, update name ?
 - frontend - react
+
+
+
+backend
+    - network_scanner
+    - api 
+    - models ?
+    Dockerfile
+
+frontend 
+    react project
+
+    Dockerfile
+
+docker-compose.yml
