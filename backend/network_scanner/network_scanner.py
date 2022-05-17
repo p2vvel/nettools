@@ -15,6 +15,9 @@ class NetworkScanner:
 
 
     def read_config(self) -> None:
+        """
+        Read and parse configuration file
+        """
         try:
             # load config files
             with open("config.yaml") as config_file:
@@ -33,11 +36,17 @@ class NetworkScanner:
 
 
     def detect_hosts(self) -> None:
+        """
+        Find hosts in the network
+        """
         available_hosts_ARP = scan_hosts_ARP(self.network, self.host_timeout)
         available_hosts_ICMP = scan_hosts_ICMP(self.network, self.host_timeout)
         self.available_hosts = set(available_hosts_ARP + available_hosts_ICMP)
 
     def detect_open_ports(self) -> None:
+        """
+        Look for open ports at hosts found in the network
+        """
         self.open_ports = {host: {} for host in self.available_hosts}
         for i, host in enumerate(self.available_hosts):
             print(f"Scanning: {host}")

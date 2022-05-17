@@ -1,14 +1,34 @@
+import ipaddress
 from typing import Iterator
 from scapy.all import srp, Ether, ARP
 import concurrent.futures
 import socket
 import re
+import subprocess
 
 
 # TODO change list[str] and tuple[boole etc.] to 
 # from typing import List
 # from typing import Tuple
 # List[str]
+
+def ping_host(address: str) -> list[str]:
+    """Execute ping command
+
+    Args:
+        address (str): host address (e.g. "192.168.1.1")
+
+    Returns:
+        list[str]: list of addresses of detected hosts
+    """
+    try:
+        subprocess.check_output(["ping", "-w", "1", "-c", "1", address])
+        return True
+    except Exception as e:
+        # host didn't respond to ping
+        print(e)
+        return False
+    
 
 def scan_hosts_ARP(network_address: str, timeout: int = 5) -> list[str]:
     """Scan the network for hosts using ARP
@@ -24,20 +44,32 @@ def scan_hosts_ARP(network_address: str, timeout: int = 5) -> list[str]:
                      ARP(pdst=network_address), timeout=timeout, verbose=False)
     return [r.psrc for p, r in ans]
 
-def scan_hosts_ICMP(network_address: str, timeout: int = 5) -> list[str]:
+
+def scan_hosts_ICMP(address: str, max_workers: int = 100) -> list[str]:
     """Scan the network for hosts using ICMP (ping)
 
     Args:
         network_address (str): _description_
-        timeout (int, optional): parameter specifying how accurate is scanning process. Defaults to 5.
+        max_workers (int, optional): parameter specifying paralelism, more = faster. Defaults to 100.
 
     Returns:
         list[str]: list of hosts in the given network
     """
-    # ans, unans = srp(Ether(dst="ff:ff:ff:ff:ff:ff") /
-                    #  ARP(pdst=network_address), timeout=timeout, verbose=False)
-    # return [r.psrc for p, r in ans]
-    return []
+    hosts = ipaddress.ip_network(address).hosts()
+    active_hosts = []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+        for host in hosts:
+            future = executor.submit(ping_host, str(host))
+            if future.result():
+                active_hosts.append(host)
+    return active_hosts
+
+# with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+#             for port in ports:
+#                 future = executor.submit(scan_port, address, port, timeout, protocol)
+#                 if future.result()[1]:
+#                     open_ports.get(alias).append(future.result()[0])
+    
 
 
 def scan_port(address: str, port: int, timeout: float, protocol_type: socket.SocketKind = socket.SOCK_STREAM) -> tuple[bool, int]:
@@ -117,3 +149,9 @@ def parse_ports_config(ports_config: str) -> list[int]:
 
     # return only unique ports
     return list(set(ports))
+
+
+if __name__ == "__main__":
+    network_address = "192.168.1.0/24"
+    result = scan_hosts_ICMP(network_address)
+    print(result)
