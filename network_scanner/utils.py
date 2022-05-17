@@ -4,6 +4,10 @@ import concurrent.futures
 import socket
 import re
 
+# TODO change list[str] and tuple[boole etc.] to 
+# from typing import List
+# from typing import Tuple
+# List[str]
 
 def scan_hosts(network_address: str, timeout: int = 5) -> list[str]:
     ans, unans = srp(Ether(dst="ff:ff:ff:ff:ff:ff") /
