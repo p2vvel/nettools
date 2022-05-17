@@ -14,7 +14,8 @@ def scan_hosts(network_address: str, timeout: int = 5) -> list[str]:
                      ARP(pdst=network_address), timeout=timeout, verbose=False)
     return [r.psrc for p, r in ans]
 
-
+# TODO 
+# add support form socker.SOCK_DGRAM
 def scan_port(address: str, port: int, timeout: float) -> tuple[bool, int]:
     scanner = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     scanner.settimeout(timeout)
