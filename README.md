@@ -7,15 +7,14 @@ TODO
 
 
 
-backend
-    - network_scanner
-    - api 
-    - models ?
-    Dockerfile
+backend/
+- network_scanner/
+- api/
+- models/ ?
+- Dockerfile
 
 frontend 
-    react project
-
-    Dockerfile
+- react project/
+- Dockerfile
 
 docker-compose.yml
