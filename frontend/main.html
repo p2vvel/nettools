@@ -45,7 +45,7 @@
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <a class="nav-link" href="#graph">Graph</a>
-              <a class="nav-link" href="#tcp_ports">Ports</a>
+              <a class="nav-link" href="#ports">Ports</a>
             </div>
           </div>
         </div>
@@ -68,8 +68,8 @@
 
 
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-6 col-ml-8 mt-3" id="graph">
+    <div class="row mt-3">
+      <div class="col-md-6 col-ml-8" id="graph">
         <div class="card">
           <div class="card-header">
             Network
@@ -79,52 +79,57 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-ml-2 mt-3" id="tcp_ports">
-        <div class="card">
-          <div class="card-header">
-            TCP ports
+
+      <div class="col-md-6 col-ml-4 row mb-3" id="ports">
+        <div class="col-md-6 mt-sm-3 mt-md-0" id="tcp_ports">
+          <div class="card">
+            <div class="card-header">
+              TCP ports
+            </div>
+            <div class="card-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Port</th>
+                    <th scope="col">Protocol</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>22</td>
+                    <td>Telnet</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-          <div class="card-body">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">Port</th>
-                  <th scope="col">Protocol</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>22</td>
-                  <td>Telnet</td>
-                </tr>
-              </tbody>
-            </table>
+        </div>
+        <div class="col-md-6 mt-sm-3 mt-md-0" id="udp_ports">
+          <div class="card">
+            <div class="card-header">
+              UDP ports
+            </div>
+            <div class="card-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Port</th>
+                    <th scope="col">Protocol</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>22</td>
+                    <td>Telnet</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-ml-2 mt-3" id="udp_ports">
-        <div class="card">
-          <div class="card-header">
-            UDP ports
-          </div>
-          <div class="card-body">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">Port</th>
-                  <th scope="col">Protocol</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>22</td>
-                  <td>Telnet</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+
+
     </div>
 
   </div>
