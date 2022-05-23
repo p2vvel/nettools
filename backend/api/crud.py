@@ -21,7 +21,7 @@ def create_host(db: Session, host: schemas.HostsCreate):
     db.add(db_host)
     db.commit()
     db.refresh(db_host)
-    return db_user
+    return db_host
 
 
 def update_host_name(db: Session, host_id: int, new_name: str):
@@ -31,12 +31,17 @@ def update_host_name(db: Session, host_id: int, new_name: str):
     
 
 def get_host_ports(db: Session, host_id: int):
-    return db.query(models.Ports).filter(models.Ports.host_id == host_id)
+    return db.query(models.Ports).filter(models.Ports.host_id == host_id).all()
 
 
-def create_host_ports(db: Session, port: schemas.PortsCreate, host_id: int):
-    db_port = models.Ports(**port.dict(), host_id=host_id)
-    db.add(db_port)
+def create_host_ports(db: Session, port: schemas.PortsCreate):
+    p = models.Ports(**port.dict())
+    db.add(p)
     db.commit()
-    db.refresh(db_port)
-    return db_port
+    return p
+
+
+def delete_host(db: Session, host_id: int):
+    host_to_delete = db.query(models.Hosts).filter(models.Hosts.id == host_id).first()
+    db.delete(host_to_delete)
+    db.commit()

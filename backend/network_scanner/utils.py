@@ -26,7 +26,7 @@ def ping_host(address: str) -> list[str]:
         return True
     except Exception as e:
         # host didn't respond to ping
-        print(e)
+        # print(e)
         return False
     
 
@@ -61,7 +61,7 @@ def scan_hosts_ICMP(address: str, max_workers: int = 100) -> list[str]:
         for host in hosts:
             future = executor.submit(ping_host, str(host))
             if future.result():
-                active_hosts.append(host)
+                active_hosts.append(str(host))
     return active_hosts
 
 # with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:

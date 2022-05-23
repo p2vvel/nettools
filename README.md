@@ -18,3 +18,6 @@ frontend
 - Dockerfile
 
 docker-compose.yml
+- backend
+- frontend 
+- db-postgres

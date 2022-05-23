@@ -1,8 +1,13 @@
+import json
 import ipaddress
-from utils import *
+
+from fastapi import FastAPI
+from .utils import *
 import yaml
+import requests
 
 
+url = 'http://localhost:80'
 
 class NetworkScanner:
     def __init__(self) -> None:
@@ -53,6 +58,52 @@ class NetworkScanner:
             temp = scan_ports(host, self.ports, self.port_timeout)
             self.open_ports[host] = temp
 
+    def save_hosts(self) -> None:
+        """
+        Post hosts
+        """
+        db_hosts = requests.get(url+'/hosts/').json()
+        db_hosts_ids = {}
+        for host in db_hosts:
+            db_hosts_ids[host['ip_address']] = host['id']
+        
+        print(f"host id {db_hosts_ids}")
+        db_hosts = [host_in_db["ip_address"] for host_in_db in db_hosts]
+        
+        hosts_to_add    = self.available_hosts - set(db_hosts)
+        hosts_to_remove = set(db_hosts) - self.available_hosts
+
+        print(f"host to add {hosts_to_add}")
+        print(f"host to remove {hosts_to_remove}")
+        for host in hosts_to_add:
+            payload = {"name": host, "ip_address": host}
+            r = requests.post(url+'/host/', data=json.dumps(payload))
+
+        for host in hosts_to_remove:
+            r = requests.delete(f"{url}/host/{db_hosts_ids[host]}")
+
+
+    def save_ports(self) -> None:
+        for host in self.open_ports:            
+            host_id = requests.get(f"{url}/hosts?ip_address={host}").json()
+            host_ports_tcp = []
+            host_ports_udp = []
+            for port in host_id['ports']:
+                if port['proto'] == False:
+                    host_ports_tcp.append(port['number_of_port'])
+                else:
+                    host_ports_udp.append(port['number_of_port'])
+            host_id = host_id['id']
+            
+            for tcp_port in self.open_ports[host]['TCP']:
+                if tcp_port not in host_ports_tcp:
+                    payload = { "number_of_port": tcp_port, "proto": False, "host_id": host_id}
+                    r = requests.post(url+'/hosts/ports/', data=json.dumps(payload))                
+            
+            for udp_port in self.open_ports[host]['UDP']:
+                if udp_port not in host_ports_udp:
+                    payload = { "number_of_port": udp_port, "proto": True, "host_id": host_id}
+                    r = requests.post(url+'/hosts/ports/', data=json.dumps(payload))                
 
 
 if __name__ == "__main__":

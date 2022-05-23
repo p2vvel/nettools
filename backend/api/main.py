@@ -1,4 +1,7 @@
+from multiprocessing import Process
 from typing import List
+from typing import Union
+from network_scanner import NetworkScannerRunner
 
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
@@ -9,11 +12,13 @@ from .database import SessionLocal, engine
 models.Base.metadata.create_all(bind=engine)
 
 
-# TODO
-# here start process of network_scanning
-#
-
 app = FastAPI()
+
+
+@app.on_event("startup")
+def startup_event():
+    p = Process(target=NetworkScannerRunner.run)
+    p.start()
 
 # Dependency
 def get_db():
@@ -24,19 +29,13 @@ def get_db():
         db.close()
 
 
-# @app.post("/users/", response_model=schemas.User)
-# def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
-#     db_user = crud.get_user_by_email(db, email=user.email)
-#     if db_user:
-#         raise HTTPException(status_code=400, detail="Email already registered")
-#     return crud.create_user(db=db, user=user)
-
-
-@app.get("/hosts/", response_model=List[schemas.Hosts])
-def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    hosts = crud.get_hosts(db, skip=skip, limit=limit)
+@app.get("/hosts/", response_model=Union[List[schemas.Hosts], schemas.Hosts ])
+def read_users(skip: int = 0, limit: int = 100, ip_address: Union[str, None] = None, db: Session = Depends(get_db)):
+    if ip_address:
+        hosts = crud.get_host_by_ip(db, ip_address)
+    else:
+        hosts = crud.get_hosts(db, skip=skip, limit=limit)
     return hosts
-
 
 @app.get("/hosts/{host_id}", response_model=schemas.Hosts)
 def read_host(host_id: int, db: Session = Depends(get_db)):
@@ -52,20 +51,19 @@ def create_user(host: schemas.HostsCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Hosts already exists")
     return crud.create_host(db=db, host=host)
 
+@app.delete("/hosts/{host_id}" )
+def delete_host(host_id: int, db: Session = Depends(get_db)):
+    crud.delete_host(db, host_id)
+    return {"ok": True}
 
-@app.post("/hosts/{host_id}/ports/", response_model=schemas.Ports)
-def create_ports_for_host(
-    host_id: int, port: schemas.PortsCreate, db: Session = Depends(get_db)
-):
-    return crud.create_host_ports(db=db, port=port, host_id=user_id)
+@app.get("/hosts/{host_id}/ports/", response_model=List[schemas.Ports])
+def get_port_for_host(host_id: int, db: Session = Depends(get_db)):
+    db_host = crud.get_host(db, host_id=host_id)
+    if db_host is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return crud.get_host_ports(db, host_id)
 
+@app.post("/hosts/ports", response_model=schemas.Ports)
+def create_ports_for_host( port: schemas.PortsCreate, db: Session = Depends(get_db)):
+    return crud.create_host_ports(db=db, port=port)
 
-# @app.get("/items/", response_model=List[schemas.Item])
-# def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-#     items = crud.get_items(db, skip=skip, limit=limit)
-#     return items
-
-
-#jeszcze to 
-# def get_host_by_ip(db: Session, ip_address: str):
-#     return db.query(models.Hosts).filter(models.Hosts.ip_address == ip_address).first()

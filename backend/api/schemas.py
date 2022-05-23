@@ -6,17 +6,15 @@ from pydantic import BaseModel
 class PortsBase(BaseModel):
     number_of_port: int
     proto: bool
-    
+    host_id: int
 
 class PortsCreate(PortsBase):
     pass
 
 class Ports(PortsBase):
     id: int
-    host_id: int
     class Config:
         orm_mode = True
-
 
 class HostsBase(BaseModel):
     name: str

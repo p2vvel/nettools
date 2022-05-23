@@ -1,8 +1,8 @@
-network: "192.168.1.0/24"
+network: "172.28.0.0/27"
 
 port_scanner:
   timeout: 0.01
-  ports: 0-1000
+  ports: 0-6000
 
 host_scanner:
   timeout: 5
