@@ -21,6 +21,15 @@ services:
     networks:
       - project_network
 
+  fronted:
+    build: ./frontend
+    ports:
+      - 5500:80
+    depends_on:
+      - backend
+    networks:
+      - project_network
+
 networks:
   project_network:
     driver: bridge
