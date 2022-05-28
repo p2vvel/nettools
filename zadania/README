@@ -1,0 +1,6 @@
+Zadania
+- 1 - polecenie w zad1.py
+- 2 - polecenie w zad2.py
+- 3 - dodaj do docker-compose konterner ealen/echo-server (https://hub.docker.com/r/ealen/echo-server)
+      oraz sprawdz czy jest wykrywany przez skaner, jakie ma otwarte porty ?
+- 4-

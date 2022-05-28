@@ -2,6 +2,7 @@ pyyaml~=6.0
 scapy~=2.4.5
 SQLAlchemy~=1.4.36
 fastapi~=0.78.0
+python-multipart~=0.0.5
 requests
 uvicorn[standard]
 psycopg2

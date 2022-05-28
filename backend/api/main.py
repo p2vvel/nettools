@@ -3,7 +3,9 @@ from typing import List
 from typing import Union
 from network_scanner import NetworkScannerRunner
 
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Form, status
+from fastapi.responses import RedirectResponse
+
 from sqlalchemy.orm import Session
 
 from . import crud, models, schemas
@@ -83,3 +85,9 @@ def get_port_for_host(host_id: int, db: Session = Depends(get_db)):
 def create_ports_for_host( port: schemas.PortsCreate, db: Session = Depends(get_db)):
     return crud.create_host_ports(db=db, port=port)
 
+@app.post("/hosts/new_hostname", response_class=RedirectResponse)
+async def update_hostname(current_hostname: str = Form(), new_hostname: str = Form(), db: Session = Depends(get_db)):
+    crud.update_host_name(db, current_hostname, new_hostname )
+    return RedirectResponse(
+        'http://127.0.0.1:5500',
+        status_code=status.HTTP_302_FOUND)

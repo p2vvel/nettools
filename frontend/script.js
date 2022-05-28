@@ -7,6 +7,8 @@ window.addEventListener("load", event => {
 
     let tcp_ports_area = document.querySelector("#tcp_ports");
     let udp_ports_area = document.querySelector("#udp_ports");
+    let new_hostname = document.querySelector("#new_hostname");
+    let current_hostname = document.querySelector("#current_hostname");
 
     function clear_tables(info = `<tr><td colspan="2">Choose a host to see its ports</td></tr>`) {
         tcp_ports_area.innerHTML = info;
@@ -20,7 +22,7 @@ window.addEventListener("load", event => {
             .then(data => {
                 clear_tables()
 
-                let hosts = data.map((host, index) => host["ip_address"]);
+                let hosts = data.map((host, index) => host["name"]);
                 let ports_array = data.map(host => {
                     return {
                         "udp": host["ports"].filter(port => port["proto"] === true).map(port => port["number_of_port"]),
@@ -29,7 +31,7 @@ window.addEventListener("load", event => {
                 })
                 let hosts_data = {};
                 for (let i = 0; i < hosts.length; i++)
-                    hosts_data[data[i]["ip_address"]] = ports_array[i];
+                    hosts_data[data[i]["name"]] = ports_array[i];
 
 
                 // create graph
@@ -45,6 +47,8 @@ window.addEventListener("load", event => {
                     try {
                         var clickedNodes = nodes.get(ids);
                         let chosen_host = clickedNodes[0].label;
+                        new_hostname.value = chosen_host;
+                        current_hostname.value = chosen_host;
                         let udp_ports = hosts_data[chosen_host]["udp"];
                         let tcp_ports = hosts_data[chosen_host]["tcp"];
                         let tcp_table = tcp_ports.map((port, i) => `<tr><td>${port}</td><td>${tcp_names[port] || "-"}</td></tr>`).join("");
@@ -55,8 +59,10 @@ window.addEventListener("load", event => {
                             udp_table = `<tr><td colspan="2">No open UDP ports</td></tr>`;
                         tcp_ports_area.innerHTML = tcp_table;
                         udp_ports_area.innerHTML = udp_table;
+
                     }
                     catch (err) {
+                        console.log(err)
                         clear_tables()
                     }
                 });

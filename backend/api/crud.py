@@ -24,11 +24,10 @@ def create_host(db: Session, host: schemas.HostsCreate):
     return db_host
 
 
-def update_host_name(db: Session, host_id: int, new_name: str):
-    host = get_host(db, host_id)
+def update_host_name(db: Session, current_hostname: str, new_name: str):
+    host = db.query(models.Hosts).filter(models.Hosts.name == current_hostname).first()
     host.name = new_name
     db.commit()
-    
 
 def get_host_ports(db: Session, host_id: int):
     return db.query(models.Ports).filter(models.Ports.host_id == host_id).all()

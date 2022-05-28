@@ -81,39 +81,53 @@
       </div>
 
       <div class="col-md-6 col-ml-4 row mb-3" id="ports">
-        <div class="col-md-6 mt-sm-3 mt-md-0">
-          <div class="card">
-            <div class="card-header">
-              TCP ports
+        <div class="row mb-3 ">
+
+          <form class="form-inline" action="http://127.0.0.1:8080/hosts/new_hostname" method="post" >
+            <div class="input-group">
+              <label for="new_hostname" class="m-2">Hostname:</label>
+              <input type="hidden" name="current_hostname" id="current_hostname" value="" />
+              <input type="text" class="form-control m-2" id="new_hostname" name="new_hostname" placeholder="hostname">
+              <button type="submit" class="btn btn-primary mb-2">Update</button>
             </div>
-            <div class="card-body">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">Port</th>
-                    <th scope="col">Protocol</th>
-                  </tr>
-                </thead>
-                <tbody id="tcp_ports"></tbody>
-              </table>
+          </form>
+
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-6 mt-sm-3 mt-md-0">
+            <div class="card">
+              <div class="card-header">
+                TCP ports
+              </div>
+              <div class="card-body">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Port</th>
+                      <th scope="col">Protocol</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tcp_ports"></tbody>
+                </table>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-6 mt-sm-3 mt-md-0">
-          <div class="card">
-            <div class="card-header">
-              UDP ports
-            </div>
-            <div class="card-body">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">Port</th>
-                    <th scope="col">Protocol</th>
-                  </tr>
-                </thead>
-                <tbody id="udp_ports"></tbody>
-              </table>
+          <div class="col-md-6 mt-sm-3 mt-md-0">
+            <div class="card">
+              <div class="card-header">
+                UDP ports
+              </div>
+              <div class="card-body">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Port</th>
+                      <th scope="col">Protocol</th>
+                    </tr>
+                  </thead>
+                  <tbody id="udp_ports"></tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
