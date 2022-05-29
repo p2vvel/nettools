@@ -1,23 +1,10 @@
-TODO
-- add ping checker bsc arp not working always - usage configure in confiugartion file or both at the same time
-- add database - sqlalchemy, postgres, models for ports, host etc.
-- docker-compose - basckedn needs host network ? 
-- fast-api - get hosts, get host, update name ?
-- frontend - react
+### Uruchomienie 
+Wymagany zainstalowany docker-compose
+```bash
+docker-compose up -d
+```
 
+następnie można się dostać do aplikacje przy użyciu 127.0.0.1:5500
 
-
-backend/
-- network_scanner/
-- api/
-- models/ ?
-- Dockerfile
-
-frontend 
-- react project/
-- Dockerfile
-
-docker-compose.yml
-- backend
-- frontend 
-- db-postgres
+#### Zadania 
+Praktyczne zadania znajdują się w katalogu zadania/
