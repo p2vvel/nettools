@@ -1,6 +1,30 @@
-Zadania
-- 1 - polecenie w zad1.py
-- 2 - polecenie w zad2.py
-- 3 - dodaj do docker-compose konterner ealen/echo-server (https://hub.docker.com/r/ealen/echo-server)
-      oraz sprawdz czy jest wykrywany przez skaner, jakie ma otwarte porty ?
-- 4-
+# Zadania
+ 
+ZADANIE 1:
+
+      Napisz w funkcji check_ip() wyrazenie regularne, 
+      ktore bedzie sprawdzalo poprawnosc adresu IP, zakladamy, 
+      ze nie mozna wpisac zer wiodacych (tzn. np 013 zamiast 13)
+
+      Mozesz sprawdzic poprawnosc rozwiazania poprzez wpisanie w terminal:
+      pytest <sciezka_do_tego_pliku .py (z rozszerzeniem)>
+
+ZADANIE 2:
+
+      Napisz widok, ktory na podstawie parametrow zwracanych w linku (GET),
+      bedzie  zwracal string w postaci np. "Kaczuszka ZuziaKaczuszka ZuziaKaczuszka Zuzia".
+      Występujące imię i liczba powtórzeń powinny zależeć od parametrów z linku
+
+      Mozesz sprawdzic poprawnosc rozwiazania poprzez wpisanie w terminal:
+      pytest <sciezka_do_tego_pliku .py (z rozszerzeniem)>
+ZADANIE 3:
+
+      Dodaj do docker-compose konterner ealen/echo-server (https://hub.docker.com/r/ealen/echo-server) oraz sprawdz czy jest wykrywany przez skaner. Jakie ma otwarte porty ?
+
+ZADANIE 4:
+
+      Korzystając z Bootstrapa stwórz poniżej układ siatki, która będzie wyświetlać się następująco:
+      - Na małych ekranach wszystkie karty w innych wierszach
+      - Na średnich ekranach po 2 karty na wiersz
+      - Na dużych ekranach po 3 karty na wiersz
+      - Na bardzo dużych ekranach wszystkie karty w jednym wierszu
