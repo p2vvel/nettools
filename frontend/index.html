@@ -69,6 +69,20 @@
 
   <div class="container-fluid">
     <div class="row mt-3">
+      <div class="col-12">
+
+        <form class="form-inline" action="http://127.0.0.1:8080/hosts/new_hostname" method="post">
+          <div class="input-group">
+            <span class="input-group-text">Hostname:</span>
+            <input type="hidden" name="current_hostname" id="current_hostname" value="" />
+            <input type="text" class="form-control" id="new_hostname" name="new_hostname" placeholder="hostname">
+            <button type="submit" class="btn btn-primary form_control">Update</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+    <div class="row mt-3">
       <div class="col-md-6 col-ml-8" id="graph">
         <div class="card">
           <div class="card-header">
@@ -82,19 +96,7 @@
 
       <div class="col-md-6 col-ml-4 row mb-3" id="ports">
         <div class="row">
-
-          <form class="form-inline" action="http://127.0.0.1:8080/hosts/new_hostname" method="post">
-            <div class="input-group">
-              <span class="input-group-text">Hostname:</span>
-              <input type="hidden" name="current_hostname" id="current_hostname" value="" />
-              <input type="text" class="form-control" id="new_hostname" name="new_hostname" placeholder="hostname">
-              <button type="submit" class="btn btn-primary form_control">Update</button>
-            </div>
-          </form>
-
-        </div>
-        <div class="row mt-3">
-          <div class="col-md-6 mt-sm-3 mt-md-0">
+          <div class="col-md-6 mt-3 mt-md-0">
             <div class="card">
               <div class="card-header">
                 TCP ports
@@ -112,7 +114,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6 mt-sm-3 mt-md-0">
+          <div class="col-md-6 mt-3 mt-md-0">
             <div class="card">
               <div class="card-header">
                 UDP ports
