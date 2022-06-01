@@ -81,14 +81,14 @@
       </div>
 
       <div class="col-md-6 col-ml-4 row mb-3" id="ports">
-        <div class="row mb-3 ">
+        <div class="row">
 
-          <form class="form-inline" action="http://127.0.0.1:8080/hosts/new_hostname" method="post" >
+          <form class="form-inline" action="http://127.0.0.1:8080/hosts/new_hostname" method="post">
             <div class="input-group">
-              <label for="new_hostname" class="m-2">Hostname:</label>
+              <span class="input-group-text">Hostname:</span>
               <input type="hidden" name="current_hostname" id="current_hostname" value="" />
-              <input type="text" class="form-control m-2" id="new_hostname" name="new_hostname" placeholder="hostname">
-              <button type="submit" class="btn btn-primary mb-2">Update</button>
+              <input type="text" class="form-control" id="new_hostname" name="new_hostname" placeholder="hostname">
+              <button type="submit" class="btn btn-primary form_control">Update</button>
             </div>
           </form>
 
