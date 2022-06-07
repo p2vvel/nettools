@@ -12,7 +12,6 @@ import re
 
 
 def check_ip(ip_address: str) -> bool:
-    # regex = r"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
     regex = r"" # tutaj wpisz wyrazenie regularne
     return re.match(regex, ip_address)
 

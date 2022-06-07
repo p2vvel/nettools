@@ -13,8 +13,8 @@ app = FastAPI()
 
 # sciezka pod ktora powinien byc dostepny widok (nie zmieniaj jej)
 @app.get("/hello/")
-async def root(name: str, count: int):  # wpisz parametry, ich nazwy mozesz rozpoznac na podstawie testu znajdujacego sie ponizej 
-    return f"Kaczuszka {name}" * count
+async def root():  # wpisz parametry, ich nazwy mozesz rozpoznac na podstawie testu znajdujacego sie ponizej 
+    return "No zmien cos tutaj"
 
 
 client = TestClient(app)
